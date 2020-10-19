@@ -2,6 +2,7 @@
 title: "Data Analysis on the Well-being of Canadians from 2017 GSS Data Set"
 author: "Rutvik Gupta (1004939837), Elyssa Plaza (1004356760), Yubing Xia (1005063244), Hongbo Zhou(1004832862)"
 date: "Oct 19, 2020"
+url: "https://github.com/RutvikGupta/STA302-PS2"
 output:
   html_document: default
 ---
@@ -18,8 +19,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
   This assignment will be looking at the data set of the 2017 General social survey on Family (GSS). The 2017 GSS is a sample survey with cross sectional design that was conducted from February 2nd to November 30th, 2017. The two objectives of this General social Survey is: \
   
-“a) To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and \
- b) To provide information on specific social policy issues of current or emerging interest.” (CHASS)
+“**a)** To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and \
+ **b)** To provide information on specific social policy issues of current or emerging interest.” (CHASS)
  
   With the given information, our team specifically looked at feelings of life, hours of work, income, mental health, age, and household size to understand any trends from these variables. We performed descriptive and inferential analysis of the data set and models for the data. Furthermore, our team was able to conclude that the model of the average working hours, income, and age do not have a statistically significant impact on feelings of life on individuals.
  
@@ -97,7 +98,7 @@ The "Histogram of Average Hours Worked and their individual frequency of feeling
 
 
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 gss_select %>% 
    mutate(feeling_life_rate = as.factor(feelings_life)) %>% 
   ggplot(mapping = aes(x = age, fill = feeling_life_rate)) +
@@ -384,5 +385,6 @@ In conclusion, our final model brings insightful thoughts on how to be nicely-pl
 
 4. “What Is Good Mental Health?” Mental Health Foundation, 5 Aug. 2016, www.mentalhealth.org.uk/your-mental-health/about-mental-health/what-good-mental-health. 
 
-
+5. "General Social Survey: An Overview, 2019" \
+https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2019001-eng.htm
 
