@@ -1,9 +1,10 @@
 ---
 title: "Data Analysis on the Well-being of Canadians from 2017 GSS Data Set"
-author: "Rutvik Gupta (1004939837), Elyssa Plaza (1004356760), Yubing Xia (1005063244), Hongbo Zhou(1004832862)"
+author: Rutvik Gupta (1004939837), Elyssa Plaza (1004356760), Yubing Xia (1005063244),
+  Hongbo Zhou(1004832862)
 date: "Oct 19, 2020"
-url: "https://github.com/RutvikGupta/STA302-PS2"
 output:
+  pdf_document: default
   html_document: default
 ---
 
@@ -11,24 +12,24 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Abstract
+## Abstract
 
-  Our team performed data diagnostics, analyzed the data, and created models from the 2017 General social survey on Family (GSS) data set to understand what variables can affect an individual's feeling of life. From the information we gathered, we observed that the data presented those who generated higher incomes ($125k and greater) ranked high feelings of life and excellent mental health than those who had lower incomes. However, the models we created concluded that mental health and house sizes have an impact on an individual's feelings of life but average working hours, income, and age do not have a statistically significant impact on an individual’s feeling of life. This is of importance because individual well-being has been a very essential aspect of life and our findings would help better understand what influences it.
+In this report, our team collected findings that would contribute to a better understanding of what factors promote one's well-being in life. This study performed descriptive and inferential data analysis, model fitting and diagnostics at the *2017 General social survey on Family (GSS)* data set. We aim to investigate what variables can potentially affect an individual's feeling of life. We studied the relationship of four variables of interest and feeling of life. After model fitting, we excluded three insignificant variables: Average working hours, income, and age. The finalized model consist of two independent vairables (household size and mental health state) and a response variable. 
 
-# Introduction 
+## Introduction 
 
-  This assignment will be looking at the data set of the 2017 General social survey on Family (GSS). The 2017 GSS is a sample survey with cross sectional design that was conducted from February 2nd to November 30th, 2017. The two objectives of this General social Survey is: \
+This assignment will be looking at the *2017 General social survey on Family (GSS)*. *2017 GSS* is a sample survey of cross sectional design. It was conducted from February 2nd to November 30th, 2017. This survey followed the below two objectives:
   
-“**a)** To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and \
- **b)** To provide information on specific social policy issues of current or emerging interest.” (CHASS)
+  "a) To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and
+  b) To provide information on specific social policy issues of current or emerging interest." (CHASS)
  
-  With the given information, our team specifically looked at feelings of life, hours of work, income, mental health, age, and household size to understand any trends from these variables. We performed descriptive and inferential analysis of the data set and models for the data. Furthermore, our team was able to conclude that the model of the average working hours, income, and age do not have a statistically significant impact on feelings of life on individuals.
+Our team were interested to analyze what factors affects an individual’s feelings of life. From the GSS data set, we extracted the following six variables: feelings of life, hours of work, income, mental health, age, and household size. Due to a large amount of NA values within the dataset, we decide to first clean the data before drawing graphs and plots for data analysis. We then performed descripive data analysis by graphing bar charts and scatter plots. Clear positive or negative relationships between the feelings of life and all five independent variables were observed. For instance, those with higher incomes generally have better rankings of both feelings in life and mental health state than those with lower incomes. 
  
-  Our team was interested to understand the trends of what affected an individual’s feelings of life. From the GSS data set, we extracted the feelings of life, hours of work, income, mental health, age, and household size variables to understand any trends. We then created bar charts and scatter plots and was able to see that there could possibly be a trend of those with higher incomes having better rankings of life and excellent mental health, than those with lower incomes. In order to further understand the findings, we created a logistic regression model. The models concluded that mental health and house sizes have an impact on an individual's feelings of life but average working hours, income, and age does not have a statistically significant impact on an individual’s feeling of life.
+In order to further determine the trend, we performed logistic regression model fitting and diagnostics. From the fitted model, we are able to conclude that mental health and house sizes have a statistically significant impact at an individual's feelings of life, whilst average working hours, income, and age does not.
  
-  This paper will examine our process of looking at the data and what we found interesting about it. From the variables we choose, we will clean the data and create plots of the data to understand any trends. We will then go into detail on the model we created to conclude our final decision on any trends we have seen. The weaknesses encountered in this survey is that there are too many missing values of the labels and variables, and the complete_rate is low. This is because people may have felt that the information they were sharing was too sensitive. Therefore, some labels were either skewed or not statistically significant. Another weakness is the self-rated variables such as, self mental health state, feeling of life, as well as household size. These variables can induce bias and participants can be subjective and rate their variables by their condition at th moment, which can be highly variable. For the future, our team can specifically look at information where individuals have given honest responses. This is to avoid unnecessary skewed data and to ensure data is statistically significant. In addition to that, a new survey could be drawn to collect responses on well being. For example, we can truly understand the mental health state from the occurrence of psychological disorder, frequency of breakdown, or frequency of visits to mental health services. These added variables would help us gain a clear understanding on how an individual’s mental health state and feelings of life can be ranked.\
+This survey also encountered several weaknesses. First, the overall completion rate of the survey is low. Next, there are too many missing values in the vairable column in the dataset. Presence of these missing responses or answers are possibly due to the fact that some participants feel that the information they were sharing was too sensitive. This poses a loss of collection in this data population and could potentially lead to biased response pool. Another weakness would be the self rating design for answers to topics including mental health state, feeling of life and household size. These self-rated questions can be answered subjectively by participants. They might rate their state by the feelings at the moment, which can be highly variable and biased. For future research, our team can improve our survey practicability by specifically asking participants objective questions for hope of collecting honest responses. This move could effectively avoid unnecessary skewed data and ensure a statistically significant data collection. Additionally, in future interviews, the following questions could be added on the topic of individual feelsing of life: whether or not the participants suffer from a psychological disorder, their frequency of mental breakdown and counseller meetings.
 
-Code and data supporting this analysis is available at: https://github.com/RutvikGupta/STA304-PS2 \
+Code and data supporting this analysis is available at: https://github.com/RutvikGupta/STA304-PS2
 
 ## Data
 ```{r, message=FALSE}
@@ -43,11 +44,15 @@ gss_data <- read.csv("gss.csv")
 skimr::skim(gss_data)
 ```
 
-As it can be seen from the preview of the data above and skimmed summary of all the labels avaiable, the dataset consists of 81 labels and there are 20602 samples per label. One of the primary strengths of using this dataset is that it consist of sufficient information for us to develop and fit a statistically significant regression model on the dataset and analyse the relationship between some of the labels. The sample size is sufficiently large to produce estimates and we can take multiple explanatory variables for our response variables so that our model will be unbiased and precise and show a better depiction of the target population. \
+The source data we perform analysis on is the the *2017 GSS dataset*. The methods used to collect and process data are stratified sampling and simple random sampling. First, 27 stratas were created and within each strata simple random sample without replacement was performed to randomly select households and then one respondent in each chosen household.
+
+Due to respondent language barriers or other personal reasons, non-response scenarios are present in the dataset. The non-response data were collected and categorized for further analysis. For respondents who answered the survey phone call but were unwilling to answer certain questions during the survey, the institution was able to impute the value based on data from other sources. If unable to find information from other sources, these will be left as NA/Not willing to participate in the survey dataset.
+
+As it can be seen from the preview of the data above and skimmed summary of all the labels avaiable, the dataset consists of 81 labels and there are 20602 samples per label. One of the primary advantage of using this dataset is that it consist of sufficient information for us to develop and fit a statistically significant regression model on the dataset and analyse the relationship between some of the labels. The sample size is sufficiently large to produce estimates and we can take multiple explanatory variables for our response variables so that our model will be unbiased and precise and show a better depiction of the target population. \
 
 For our model, the target population is a sample size of approximately average hours worked, life feelings score, self rate mental health and age of 20,000 respondents. The frame population are all the citizens of Canada who are eligible to respond to the survey using Statistics Canada’s common telephone frame. Since the target population is so large, the sampled population are 1000 randomly selected respondent from entire dataset with given labels. \
 
-One weakness of using this dataset is that the there too many missing values for most of the labels and variables, and the complete_rate is also quite low overall. This implies there are many variables in the dataset that involves sharing sensitive information and people wont feel confident sharing them while filling out the survey. Therefore, our anaylsis for some labels can be a bit skewed or not statistically significant. Also many people can lie when responding to some general life related labels like self_rated_mental_health or feeling_life, and that also can lead to poor or biased analyis of the dataset.
+One disadvantage of using this dataset is that the there too many missing values for most of the labels and variables, and the complete_rate is also quite low overall. This implies there are many variables in the dataset that involves sharing sensitive information and people wont feel confident sharing them while filling out the survey. Therefore, our anaylsis for some labels can be a bit skewed or not statistically significant. Also many people can lie when responding to some general life related labels like self_rated_mental_health or feeling_life, and that also can lead to poor or biased analyis of the dataset.
 ```{r, message=FALSE}
 set.seed(100)
 gss_select <- select(gss_data, feelings_life, average_hours_worked, income_respondent, self_rated_mental_health, age, hh_size) %>%       filter(self_rated_mental_health != "Don't know" & (!feelings_life %in% c(NA, "Don't know")) & (!average_hours_worked %in% c(NA, "Don't know", "0 hour")) & (!hh_size %in% c(NA, 0))) %>% sample_n(size=1000)
@@ -84,8 +89,6 @@ gss_select %>%
 ```
 When we arrange our sample population with respect to descending order of feelings_life, we see that people with "very good" or "excellent" self rated mental health have a frequent higher feeling_life score ranging from 8 to 10 compared to the people with "poor or "fair" self rated mental health  who have a lower feelings_life score (5 to 8) showing a positive relationship between the two variables. 
 
-
-
 ```{r, message=FALSE}
 gss_select %>% 
    mutate(feeling_life_rate = as.factor(feelings_life)) %>% 
@@ -97,8 +100,6 @@ gss_select %>%
 ```
 
 The "Histogram of Average Hours Worked and their individual frequency of feeling_life" supports our findings in the table analysis showing that people working 30 to 40 hours on average a week have more frequent rating of high feeling_life variable (8 to 10) as compared to other. This histogram also shows that our data can be normally distributed because of its bell shaped curve.
-
-
 
 ```{r, message=FALSE, warning=FALSE}
 gss_select %>% 
@@ -112,21 +113,17 @@ gss_select %>%
 
 The "Histogram of Age groups and their individual frequency of feeling_life" supports our findings in the table analysis showing that people in 20 to 40 age groups have more frequent rating of high feeling_life variable (8 to 10) as compared to other. This histogram also shows that our data can be normally distributed because of its bell shaped curve.
 
-
-
 ```{r, message=FALSE}
 gss_select %>% 
    mutate(feeling_life_rate = as.factor(feelings_life)) %>% 
   ggplot(mapping = aes(x = income_respondent, fill = feeling_life_rate)) +
    labs(x = "Income Bracket Groups",
        y = "Count",
-       title = "Histogram of income bracket groups and their individual frequency of feeling_life" ) +
+       title = "Histogram of income bracket groups and their frequency of feeling_life" ) +
   geom_bar()
 ```
 
 The "Histogram of income bracket groups and their individual frequency of feeling_life" supports our findings in the table analysis showing that people in higher income bracket (\$50k and above) have more frequent rating of high feeling_life variable (8 to 10) as compared to other. This histogram also shows that our data can be normally distributed because of its bell shaped curve.
-
-
 
 ```{r, message=FALSE}
 gss_select %>% 
@@ -134,13 +131,11 @@ gss_select %>%
   ggplot(mapping = aes(x = self_rated_mental_health, fill = feeling_life_rate)) +
   labs(x = "self rated mental health Groups",
        y = "Count",
-       title = "Histogram of self rated mental health Groups and their individual frequency of feeling_life" ) +
+       title = "Histogram of self rated mental health Groups and their frequency of feeling_life" ) +
   geom_bar()
 ```
 
 The "Histogram of self rated mental health Groups and their individual frequency of feeling_life" supports our findings in the table analysis showing that people with "excellent" and "very good" self rated mental health have more frequent rating of high feeling_life variable (8 to 10) as compared to other.
-
-
 
 ```{r, message=FALSE}
 gss_select %>% 
@@ -154,8 +149,6 @@ gss_select %>%
 
 The "Histogram of House Size Groups and their individual frequency of feeling_life" shows an opposite result as compared to our findings in the table analysis showing that people with with smaller house size (1 to 3) have more frequent rating of high feeling_life variable (8 to 10) as compared to other. This implies that we need to rely on our anaysis from fitting the model to justify our findings.
 
-
-
 ```{r, message=FALSE}
 ggplot(gss_select, aes(x=age,y=feelings_life))+geom_point(colour = "red", size = 1)+geom_smooth(method=lm)+ labs(title="Scatterplot of Feelings of Life and Age") 
 
@@ -163,15 +156,11 @@ ggplot(gss_select, aes(x=age,y=feelings_life))+geom_point(colour = "red", size =
 
 The "Scatterplot of Feelings of Life and Age" plots the variables of age (x-axis) and feelings_life (y-axis), ranking of life from 0 to 10 (bad feeling of life to good feeling of life).The plot shows that many of the points are concentrated when the feeling of life is at 7.5 - 10, implying many have high feelings of life. In addition to that, the positive line of best fit shows that the feelings_life variable tend to be higher as age increases. 
 
-
-
 ```{r, message=FALSE}
 ggplot(gss_select, aes(x=hh_size,y=feelings_life))+geom_point(colour = "red", size = 1)+geom_smooth(method=lm)+ labs(title="Scatterplot of Feeling of Life and House Hold Size")
 ```
 
 The "Scatterplot of Feeling of Life and House Hold Size" plots the variables hh_size (x-axis) and feelings_life (y-axis). The plot shows that many of the points are concentrated when the feeling of life is at 7.5 - 10, implying many have high feelings of life. In addition to that, the positive line of best fit on the plot shows that the feelings life increase when house hold size is larger. 
-
-
 
 ```{r, message=FALSE}
 ggplot(gss_select, aes(x= income_respondent ,y=feelings_life))+geom_point(colour = "red", size = 1)+ geom_smooth(method=lm)+ labs(title="Scatteplot Feeling of Life and Income")
@@ -179,15 +168,11 @@ ggplot(gss_select, aes(x= income_respondent ,y=feelings_life))+geom_point(colour
 
 The "Scatteplot Feeling of Life and Income" plots the variables income_respondent (x-axis) and feelings_life (y-axis). The plot shows that lower feelings of life (0-5) are more evident from those making an income of less than \$75k. Whereas, those who have an income greater than $75k tend to have higher feelings of life (6-10).
 
-
-
 ```{r, message=FALSE}
 ggplot(gss_select, aes(x = self_rated_mental_health,y= feelings_life, shape = factor(income_respondent== ""))) + geom_point(aes(colour = factor(income_respondent)), size = 4) +labs(title="Scatterplot of Feeling of Life Ranking and Mental Health Ranking")
 ```
 
 The "Scatterplot of Feeling of Life Ranking and Mental Health Ranking" plots the variables self_rated_mental_health (x-axis) and feelings_life (y-axis), with income_respondents as the factor. The red point show those who have an income from \$100k to \$124,999. This point is evident when self_rated_mental_health is "Excellent" and feelings_life ranking is ranked high (10). This red point is also evident when self_rated_mental_health is poor, however feelings_life ranking is high (9).
-
-
 
 ```{r, message=FALSE}
 ggplot(gss_select, aes(x = income_respondent,y= feelings_life, shape = factor(self_rated_mental_health== ""))) + geom_point(aes(colour = factor(self_rated_mental_health)), size = 4) +labs(title="Scatterplot of Incomes and Feeling of Life Ranking")
@@ -197,7 +182,7 @@ The "Scatterplot of Incomes and Feeling of Life Ranking" plots the variables inc
 
 All the scatterplots above strongly supports our findings and observations in the tables and historgram analysis. The line of best fit in some variables shows positive slope hence showing a strong relationship between the explanatory variables and our response variables feelings life.
 
-# Model
+## Model
 The main response variable we are interested in is feelings of life, which is a categorical variable ranging from 0 to 10. In order for us to perform a logistic regression model analysis on this categorical variable, we first dichotomize it into 1 -- a good feeling of life, and 0 -- a not good feeling of life. Values from 0 to 5 of the original ranking would now be 0, and 6 to 10 would be 1.
 
 Then we examine other variables of interest: average working hours, a numerical variable; income, another numerical variable; self-rated mental health, a categorical variable; age, also a numerical variable; and household size, a categorical variable. We filter some NA values and sample 1000 data entries from the entire 20602 observations of the survey.
@@ -211,7 +196,7 @@ After we finish the modelling using both techniques, we would first compare the 
 After fitting the models, we would check for model assumptions and perform diagnostics for the models to see if constant variance property is violated and the presence of possible outliers. Also, we would be interpreting all the results and discussing possible weaknesses and next steps in later sections.
 
 
-# Results
+## Results
 
 **Model Fitting**
 
@@ -305,11 +290,11 @@ round(auc(roc_logit1),2)
 ```
 
 
-# Discussion
+## Discussion
 
 **2017 GSS Survey**
 
-In this report, we performed descriptive and inferential analysis on the 2017 GSS dataset (General Social Survey on Family). This survey was conducted from February to November in 2017 via a cross-sectional study design. The survey team reached out to the sampling population and collected participants’ responses on their overall life well-being by interviewing the participants a list of questions.
+In this report, we performed descriptive and inferential analysis on the *2017 GSS dataset* (General Social Survey on Family). This survey was conducted from February to November in 2017 via a cross-sectional study design. The survey team reached out to the sampling population and collected participants’ responses on their overall life well-being by interviewing the participants a list of questions.
  
 The survey sampling design followed a stratified sampling methodology. First, all ten provinces in Canada are divided into smaller geographical areas and each defined as one strata, with many CMAs (Census Metropolitan Areas) considered as separate stratas. In total, this dataset created 27 stratas. Following the strata splitting, within each strata SRS (Simple Random Sample) without replacement was performed to randomly select households and then subsequently one respondent in each chosen household.
  
@@ -377,16 +362,15 @@ In the future, a new survey should be drawn to collect responses on well being. 
 
 In conclusion, our final model brings insightful thoughts on how to be nicely-placed in life. It is a decent tool for future analysis on one’s general well being, giving that they are Canadians who fit in the target population. By inputting data on their household size and self rated mental health state, the model is able to generate a reliable result on their current feeling of life, and vice versa. 
 
-# References 
+## References 
 
-1. Ebner, Joshua, et al. “How to Make a Scatter Plot in R.” Sharp Sight, 26 Nov. 2019, www.sharpsightlabs.com/blog/scatter-plot-in-r/. 
+1. Ebner, Joshua, et al. "How to Make a Scatter Plot in R." Sharp Sight, 26 Nov. 2019, www.sharpsightlabs.com/blog/scatter-plot-in-r/. 
 
-2. “General Social Survey, Cycle 31 : Families.” Statistics Canada, Minister Responsible for Statistics Canada, sda-artsci-utoronto-ca.myaccess.library.utoronto.ca/sdaweb/dli2/gss/gss31/gss31/more_doc/GSS31_User_Guide.pdf. 
+2. "General Social Survey, Cycle 31 : Families." Statistics Canada, Minister Responsible for Statistics Canada, sda-artsci-utoronto-ca.myaccess.library.utoronto.ca/sdaweb/dli2/gss/gss31/gss31/more_doc/GSS31_User_Guide.pdf. 
 
 3. McElreath, Richard, 2020, Statistical  Rethinking,  2nd  Edition, CRC Press.
 
-4. “What Is Good Mental Health?” Mental Health Foundation, 5 Aug. 2016, www.mentalhealth.org.uk/your-mental-health/about-mental-health/what-good-mental-health. 
+4. "What Is Good Mental Health?" Mental Health Foundation, 5 Aug. 2016, www.mentalhealth.org.uk/your-mental-health/about-mental-health/what-good-mental-health. 
 
-5. "General Social Survey: An Overview, 2019" \
-https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2019001-eng.htm
+
 
